@@ -55,7 +55,16 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
   }));
 
   return (
-    <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
+   // <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
+
+   <div style={{
+  maxWidth: 480,
+  margin: "0 auto",
+  padding: "24px 16px",
+  background: isDay ? "linear-gradient(180deg, #4FA8D8, #DCF3EE)" : "linear-gradient(180deg, #0D1B2A, #243352)",
+  color: "#FAF8F4",
+  minHeight: "100vh",
+}}>
       <p style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 18 }}>
         {cityName}
       </p>
