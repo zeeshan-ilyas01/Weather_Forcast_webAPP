@@ -4,6 +4,7 @@ import SavedCityCard from "../components/SavedCityCard";
 import AdSlot from "../components/AdSlot";
 import Footer from "../components/Footer";
 import { searchCities } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 export default function HubPage() {
   const [query, setQuery] = useState("");
@@ -32,12 +33,18 @@ export default function HubPage() {
     }, 400);
   }
 
-  function handleSelectCity(city) {
+  /*function handleSelectCity(city) {
     setQuery(city.name);
     setSuggestions([]);
     // Navigating to the detail page for this city comes once routing is wired up
     console.log("Selected:", city);
   }
+*/
+  const navigate = useNavigate();
+
+function handleSelectCity(city) {
+  navigate(`/city?lat=${city.latitude}&lon=${city.longitude}&name=${encodeURIComponent(city.name)}`);
+}
 
   return (
     <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
