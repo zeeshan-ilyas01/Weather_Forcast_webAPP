@@ -47,8 +47,22 @@ function handleSelectCity(city) {
 }
 
   return (
-    <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
-      <h1 style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 22 }}>
+  // <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
+  
+  <div style={{
+  maxWidth: 480,
+  margin: "0 auto",
+  padding: "24px 16px",
+  background: "linear-gradient(180deg, #E8A66E, #F6D9B8)",
+  color: "#FAF8F4",
+  minHeight: "100vh",
+}}>
+  
+  
+  
+    
+    <h1 style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 22, color: "#FAF8F4" }}>
+    
         Weather Hub
       </h1>
 
@@ -59,7 +73,10 @@ function handleSelectCity(city) {
         onSelectCity={handleSelectCity}
       />
 
-      <p style={{ fontSize: 13, fontWeight: 600, margin: "16px 0 8px" }}>Saved locations</p>
+      
+      <p style={{ fontSize: 13, fontWeight: 600, margin: "16px 0 8px", color: "#FAF8F4" }}>Saved locations</p>
+      
+      
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
         {savedCities.map((city, i) => (
           <SavedCityCard
