@@ -1,6 +1,10 @@
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom";
 import HubPage from "./pages/HubPage";
 import DetailPage from "./pages/DetailPage";
+import Privacy from "./pages/legal/Privacy";
+import Terms from "./pages/legal/Terms";
+import Contact from "./pages/legal/Contact";
+
 
 function DetailPageWrapper() {
   const [searchParams] = useSearchParams();
@@ -17,6 +21,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HubPage />} />
         <Route path="/city" element={<DetailPageWrapper />} />
+<Route path="/privacy" element={<Privacy />} />
+<Route path="/terms" element={<Terms />} />
+<Route path="/contact" element={<Contact />} />
+
+
+
+
       </Routes>
     </BrowserRouter>
   );

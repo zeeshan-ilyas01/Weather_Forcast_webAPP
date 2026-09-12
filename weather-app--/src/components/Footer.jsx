@@ -1,4 +1,8 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
+  const linkStyle = { fontSize: 11, opacity: 0.7, color: "inherit", textDecoration: "none" };
+
   return (
     <div
       style={{
@@ -10,9 +14,9 @@ export default function Footer() {
         borderTop: "0.5px solid rgba(255,255,255,0.15)",
       }}
     >
-      <span style={{ fontSize: 11, opacity: 0.6, cursor: "pointer" }}>Privacy policy</span>
-      <span style={{ fontSize: 11, opacity: 0.6, cursor: "pointer" }}>Terms</span>
-      <span style={{ fontSize: 11, opacity: 0.6, cursor: "pointer" }}>Contact</span>
+      <Link to="/privacy" style={linkStyle}>Privacy policy</Link>
+      <Link to="/terms" style={linkStyle}>Terms</Link>
+      <Link to="/contact" style={linkStyle}>Contact</Link>
     </div>
   );
 }
