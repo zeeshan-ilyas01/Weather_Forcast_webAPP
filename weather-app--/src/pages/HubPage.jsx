@@ -12,11 +12,11 @@ export default function HubPage() {
   const debounceTimer = useRef(null);
 
   // Placeholder saved cities for now — real saving (localStorage) comes later
-  const savedCities = [
-    { name: "Khulna", temperature: 28, weatherCode: 45 },
-    { name: "London", temperature: 12, weatherCode: 61 },
-    { name: "Tokyo", temperature: 20, weatherCode: 0 },
-  ];
+ const savedCities = [
+  { name: "Khulna", temperature: 28, weatherCode: 45, latitude: 22.8456, longitude: 89.5403 },
+  { name: "London", temperature: 12, weatherCode: 61, latitude: 51.5074, longitude: -0.1278 },
+  { name: "Tokyo", temperature: 20, weatherCode: 0, latitude: 35.6762, longitude: 139.6503 },
+];
 
   function handleQueryChange(text) {
     setQuery(text);
@@ -32,7 +32,9 @@ export default function HubPage() {
       setSuggestions(results);
     }, 400);
   }
-
+function handleCityClick(city) {
+  navigate(`/city?lat=${city.latitude}&lon=${city.longitude}&name=${encodeURIComponent(city.name)}`);
+}
   /*function handleSelectCity(city) {
     setQuery(city.name);
     setSuggestions([]);
@@ -45,6 +47,7 @@ export default function HubPage() {
 function handleSelectCity(city) {
   navigate(`/city?lat=${city.latitude}&lon=${city.longitude}&name=${encodeURIComponent(city.name)}`);
 }
+
 
   return (
   // <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
@@ -79,12 +82,13 @@ function handleSelectCity(city) {
       
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
         {savedCities.map((city, i) => (
-          <SavedCityCard
-            key={i}
-            name={city.name}
-            temperature={city.temperature}
-            weatherCode={city.weatherCode}
-          />
+        <SavedCityCard
+  key={i}
+  name={city.name}
+  temperature={city.temperature}
+  weatherCode={city.weatherCode}
+  onClick={() => handleCityClick(city)}
+/>
         ))}
       </div>
 

@@ -1,8 +1,9 @@
 import { getWeatherLabel } from "../utils/weatherCodes";
 
-export default function SavedCityCard({ name, temperature, weatherCode }) {
+export default function SavedCityCard({ name, temperature, weatherCode, onClick }) {
   return (
     <div
+      onClick={onClick}
       style={{
         background: "rgba(255,255,255,0.12)",
         borderRadius: 12,
