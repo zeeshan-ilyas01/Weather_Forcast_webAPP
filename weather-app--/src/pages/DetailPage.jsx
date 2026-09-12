@@ -19,7 +19,7 @@ function formatClock(isoLike) {
   return `${h}:${mStr} ${ampm}`;
 }
 
-export default function DetailPage({ cityName = "Lahore", latitude = 31.55, longitude = 74.35 }) {
+export default function DetailPage({ cityName = "Lahore", latitude = 31.55, longitude = 74.36 }) {
   const [weather, setWeather] = useState(null);
   const [unit, setUnit] = useState("C");
 
@@ -55,44 +55,42 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
   }));
 
   return (
-   // <div style={{ maxWidth: 480, margin: "0 auto", padding: "24px 16px" }}>
+    <div style={{
+      minHeight: "100vh",
+      width: "100%",
+      background: isDay ? "linear-gradient(180deg, #4FA8D8, #DCF3EE)" : "linear-gradient(180deg, #0D1B2A, #243352)",
+      color: "#FAF8F4",
+    }}>
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "24px 16px" }}>
+        <p style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 18 }}>
+          {cityName}
+        </p>
 
-   <div style={{
-  maxWidth: 480,
-  margin: "0 auto",
-  padding: "24px 16px",
-  background: isDay ? "linear-gradient(180deg, #4FA8D8, #DCF3EE)" : "linear-gradient(180deg, #0D1B2A, #243352)",
-  color: "#FAF8F4",
-  minHeight: "100vh",
-}}>
-      <p style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 18 }}>
-        {cityName}
-      </p>
+        <UnitToggle unit={unit} onUnitChange={setUnit} />
 
-      <UnitToggle unit={unit} onUnitChange={setUnit} />
+        <SkyBackground isDay={isDay} weatherCode={weather.current.weather_code} />
 
-      <SkyBackground isDay={isDay} weatherCode={weather.current.weather_code} />
+        <CurrentConditions
+          temperature={toDisplay(weather.current.temperature_2m)}
+          apparentTemperature={toDisplay(weather.current.apparent_temperature)}
+          weatherCode={weather.current.weather_code}
+        />
 
-      <CurrentConditions
-        temperature={toDisplay(weather.current.temperature_2m)}
-        apparentTemperature={toDisplay(weather.current.apparent_temperature)}
-        weatherCode={weather.current.weather_code}
-      />
+        <StatGrid
+          humidity={weather.current.relative_humidity_2m}
+          windSpeed={Math.round(weather.current.wind_speed_10m)}
+          sunrise={formatClock(weather.daily.sunrise?.[0])}
+          sunset={formatClock(weather.daily.sunset?.[0])}
+        />
 
-      <StatGrid
-        humidity={weather.current.relative_humidity_2m}
-        windSpeed={Math.round(weather.current.wind_speed_10m)}
-        sunrise={formatClock(weather.daily.sunrise?.[0])}
-        sunset={formatClock(weather.daily.sunset?.[0])}
-      />
+        <HourlyForecast hours={hours} />
 
-      <HourlyForecast hours={hours} />
+        <AdSlot label="in-feed" />
 
-      <AdSlot label="in-feed" />
+        <DailyForecast days={days} />
 
-      <DailyForecast days={days} />
-
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 }
