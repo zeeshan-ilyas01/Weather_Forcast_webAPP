@@ -10,6 +10,7 @@ import Footer from "../components/Footer";
 import { getForecast } from "../utils/api";
 import { colors, fonts, layout } from "../utils/theme";
 import Loader from "../components/Loader";
+import { getWeatherCategory } from "../utils/weatherCodes";
 
 function formatClock(isoLike) {
   if (!isoLike) return "--:--";
@@ -38,22 +39,24 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
     return Math.round((celsius * 9) / 5 + 32);
   }
 
-if (!weather) {
-  return (
-    <div style={{
-      minHeight: "100vh",
-      width: "100%",
-      background: `linear-gradient(180deg, ${colors.clearDay[0]}, ${colors.clearDay[1]})`,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}>
-      <Loader color={colors.cream} />
-    </div>
-  );
-}
+  if (!weather) {
+    return (
+      <div style={{
+        minHeight: "100vh",
+        width: "100%",
+        background: `linear-gradient(180deg, ${colors.sky.clear.day[0]}, ${colors.sky.clear.day[1]})`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        <Loader color={colors.cream} />
+      </div>
+    );
+  }
 
   const isDay = weather.current.is_day === 1;
+  const category = getWeatherCategory(weather.current.weather_code);
+  const palette = colors.sky[category]?.[isDay ? "day" : "night"] || colors.sky.clear.day;
 
   const hours = weather.hourly.time.slice(0, 8).map((time, i) => ({
     time: time.split("T")[1],
@@ -67,19 +70,17 @@ if (!weather) {
     min: toDisplay(weather.daily.temperature_2m_min[i]),
   }));
 
-return (
-  <div style={{
-    minHeight: "100vh",
-    width: "100%",
-    background: isDay
-      ? `linear-gradient(180deg, ${colors.clearDay[0]}, ${colors.clearDay[1]})`
-      : `linear-gradient(180deg, ${colors.clearNight[0]}, ${colors.clearNight[1]})`,
-    color: colors.cream,
-  }}>
-    <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px" }}>
-      <p style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 18 }}>
-        {cityName}
-      </p>
+  return (
+    <div style={{
+      minHeight: "100vh",
+      width: "100%",
+      background: `linear-gradient(180deg, ${palette[0]}, ${palette[1]})`,
+      color: colors.cream,
+    }}>
+      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px" }}>
+        <p style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 18 }}>
+          {cityName}
+        </p>
 
         <UnitToggle unit={unit} onUnitChange={setUnit} />
 
