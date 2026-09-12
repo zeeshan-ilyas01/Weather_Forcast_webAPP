@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-
+import { colors, fonts, layout } from "../../utils/theme";
 export default function Privacy() {
   return (
     <div style={{
       minHeight: "100vh",
       width: "100%",
-      background: "linear-gradient(180deg, #E8A66E, #F6D9B8)",
+      background: `linear-gradient(180deg, ${colors.dawnStart}, ${colors.dawnEnd})`,
     }}>
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "40px 20px", color: "#FAF8F4", fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "40px 20px", color: colors.cream, fontFamily: fonts.display }}>
         <Link to="/" style={{ color: "#FAF8F4", opacity: 0.85, fontSize: 14, textDecoration: "none" }}>
           ← Weather Hub
         </Link>

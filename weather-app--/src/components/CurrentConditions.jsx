@@ -1,11 +1,12 @@
 import { getWeatherLabel } from "../utils/weatherCodes";
+import { colors, fonts } from "../utils/theme";
 
 export default function CurrentConditions({ temperature, apparentTemperature, weatherCode }) {
   return (
-    <div style={{ textAlign: "center", margin: "14px 0" }}>
+    <div style={{ textAlign: "center", margin: "14px 0", color: colors.cream }}>
       <p
         style={{
-          fontFamily: "'Fraunces', serif",
+          fontFamily: fonts.display,
           fontWeight: 600,
           fontSize: 96,
           lineHeight: 1,

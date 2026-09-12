@@ -1,8 +1,9 @@
 import { getWeatherLabel } from "../utils/weatherCodes";
+import { colors } from "../utils/theme";
 
 export default function DailyForecast({ days }) {
   return (
-    <div>
+    <div style={{ color: colors.cream }}>
       <p style={{ fontSize: 12, opacity: 0.7, margin: "0 0 8px", fontWeight: 600 }}>
         6-day forecast
       </p>
@@ -13,7 +14,7 @@ export default function DailyForecast({ days }) {
             display: "flex",
             gap: 12,
             padding: "8px 0",
-            borderBottom: i < days.length - 1 ? "0.5px solid rgba(255,255,255,0.15)" : "none",
+            borderBottom: i < days.length - 1 ? `0.5px solid ${colors.cream}26` : "none",
           }}
         >
           <span style={{ flex: 1 }}>{day.date}</span>

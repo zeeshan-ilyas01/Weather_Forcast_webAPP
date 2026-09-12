@@ -1,3 +1,5 @@
+import { colors } from "../utils/theme";
+
 export default function SearchBar({ query, suggestions, onQueryChange, onSelectCity }) {
   return (
     <div>
@@ -12,9 +14,9 @@ export default function SearchBar({ query, suggestions, onQueryChange, onSelectC
           margin: "0 auto 12px",
           padding: "10px 14px",
           borderRadius: 999,
-          border: "1px solid rgba(255,255,255,0.3)",
-          background: "rgba(255,255,255,0.15)",
-          color: "#FAF8F4",
+          border: `1px solid ${colors.cream}4D`,
+          background: `${colors.cream}26`,
+          color: colors.cream,
           fontSize: 15,
         }}
       />
@@ -25,7 +27,7 @@ export default function SearchBar({ query, suggestions, onQueryChange, onSelectC
             <li
               key={i}
               onClick={() => onSelectCity(city)}
-              style={{ padding: "8px 12px", cursor: "pointer", fontSize: 14 }}
+              style={{ padding: "8px 12px", cursor: "pointer", fontSize: 14, color: colors.cream }}
             >
               {city.name}, {city.country}
             </li>

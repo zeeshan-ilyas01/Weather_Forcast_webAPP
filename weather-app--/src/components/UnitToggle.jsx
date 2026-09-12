@@ -1,3 +1,5 @@
+import { colors } from "../utils/theme";
+
 export default function UnitToggle({ unit, onUnitChange }) {
   return (
     <div style={{ display: "flex", justifyContent: "flex-end", gap: 2, margin: "0 0 10px" }}>
@@ -10,8 +12,8 @@ export default function UnitToggle({ unit, onUnitChange }) {
           borderRadius: 999,
           border: "none",
           cursor: "pointer",
-          background: unit === "C" ? "#FAF8F4" : "transparent",
-          color: unit === "C" ? "#12181F" : "rgba(250,248,244,0.7)",
+          background: unit === "C" ? colors.cream : "transparent",
+          color: unit === "C" ? colors.ink : `${colors.cream}B3`,
         }}
       >
         °C
@@ -25,8 +27,8 @@ export default function UnitToggle({ unit, onUnitChange }) {
           borderRadius: 999,
           border: "none",
           cursor: "pointer",
-          background: unit === "F" ? "#FAF8F4" : "transparent",
-          color: unit === "F" ? "#12181F" : "rgba(250,248,244,0.7)",
+          background: unit === "F" ? colors.cream : "transparent",
+          color: unit === "F" ? colors.ink : `${colors.cream}B3`,
         }}
       >
         °F

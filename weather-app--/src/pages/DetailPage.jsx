@@ -8,6 +8,8 @@ import UnitToggle from "../components/UnitToggle";
 import AdSlot from "../components/AdSlot";
 import Footer from "../components/Footer";
 import { getForecast } from "../utils/api";
+import { colors, fonts, layout } from "../utils/theme";
+import Loader from "../components/Loader";
 
 function formatClock(isoLike) {
   if (!isoLike) return "--:--";
@@ -36,9 +38,20 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
     return Math.round((celsius * 9) / 5 + 32);
   }
 
-  if (!weather) {
-    return <p style={{ textAlign: "center", padding: 60 }}>Loading…</p>;
-  }
+if (!weather) {
+  return (
+    <div style={{
+      minHeight: "100vh",
+      width: "100%",
+      background: `linear-gradient(180deg, ${colors.clearDay[0]}, ${colors.clearDay[1]})`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}>
+      <Loader color={colors.cream} />
+    </div>
+  );
+}
 
   const isDay = weather.current.is_day === 1;
 
@@ -54,17 +67,19 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
     min: toDisplay(weather.daily.temperature_2m_min[i]),
   }));
 
-  return (
-    <div style={{
-      minHeight: "100vh",
-      width: "100%",
-      background: isDay ? "linear-gradient(180deg, #4FA8D8, #DCF3EE)" : "linear-gradient(180deg, #0D1B2A, #243352)",
-      color: "#FAF8F4",
-    }}>
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "24px 16px" }}>
-        <p style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 18 }}>
-          {cityName}
-        </p>
+return (
+  <div style={{
+    minHeight: "100vh",
+    width: "100%",
+    background: isDay
+      ? `linear-gradient(180deg, ${colors.clearDay[0]}, ${colors.clearDay[1]})`
+      : `linear-gradient(180deg, ${colors.clearNight[0]}, ${colors.clearNight[1]})`,
+    color: colors.cream,
+  }}>
+    <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px" }}>
+      <p style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 18 }}>
+        {cityName}
+      </p>
 
         <UnitToggle unit={unit} onUnitChange={setUnit} />
 

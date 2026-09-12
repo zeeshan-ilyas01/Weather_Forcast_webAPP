@@ -1,6 +1,8 @@
+import { colors } from "../utils/theme";
+
 export default function HourlyForecast({ hours }) {
   return (
-    <div>
+    <div style={{ color: colors.cream }}>
       <p style={{ fontSize: 12, opacity: 0.7, margin: "0 0 8px", fontWeight: 600 }}>
         Next hours
       </p>

@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap');
-
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 * { box-sizing: border-box; }
 body { margin: 0; font-family: 'Inter', sans-serif; }
 

@@ -5,6 +5,7 @@ import SavedCityCard from "../components/SavedCityCard";
 import AdSlot from "../components/AdSlot";
 import Footer from "../components/Footer";
 import { searchCities } from "../utils/api";
+import { colors, fonts, layout } from "../utils/theme";
 
 export default function HubPage() {
   const [query, setQuery] = useState("");
@@ -50,8 +51,8 @@ export default function HubPage() {
       background: "linear-gradient(180deg, #E8A66E, #F6D9B8)",
       color: "#FAF8F4",
     }}>
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "24px 16px" }}>
-        <h1 style={{ textAlign: "center", fontFamily: "'Fraunces', serif", fontSize: 22, color: "#FAF8F4" }}>
+      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px" }}>
+        <h1 style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 22, color: colors.cream }}>
           Weather Hub
         </h1>
 

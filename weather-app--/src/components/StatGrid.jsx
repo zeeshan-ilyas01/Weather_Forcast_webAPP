@@ -1,3 +1,5 @@
+import { colors } from "../utils/theme";
+
 export default function StatGrid({ humidity, windSpeed, sunrise, sunset }) {
   const stats = [
     { label: "Humidity", value: `${humidity}%` },
@@ -19,10 +21,11 @@ export default function StatGrid({ humidity, windSpeed, sunrise, sunset }) {
         <div
           key={i}
           style={{
-            background: "rgba(255,255,255,0.1)",
+            background: `${colors.cream}1A`,
             borderRadius: 10,
             padding: 8,
             textAlign: "center",
+            color: colors.cream,
           }}
         >
           <p style={{ fontSize: 13, fontWeight: 600, margin: 0 }}>{stat.value}</p>
