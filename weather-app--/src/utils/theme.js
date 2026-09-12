@@ -17,6 +17,8 @@ export const fonts = {
   body: "'Inter', sans-serif",
 };
 
+
 export const layout = {
   maxWidth: 640,
+  narrowWidth: 400,
 };

@@ -1,4 +1,4 @@
-import { colors } from "../utils/theme";
+import { colors, layout } from "../utils/theme";
 
 export default function SearchBar({ query, suggestions, onQueryChange, onSelectCity }) {
   return (
@@ -10,7 +10,7 @@ export default function SearchBar({ query, suggestions, onQueryChange, onSelectC
         style={{
           display: "block",
           width: "100%",
-          maxWidth: 400,
+          maxWidth: layout.narrowWidth,
           margin: "0 auto 12px",
           padding: "10px 14px",
           borderRadius: 999,
@@ -22,7 +22,7 @@ export default function SearchBar({ query, suggestions, onQueryChange, onSelectC
       />
 
       {suggestions.length > 0 && (
-        <ul style={{ maxWidth: 400, margin: "0 auto 12px", padding: 0, listStyle: "none" }}>
+        <ul style={{ maxWidth: layout.narrowWidth, margin: "0 auto 12px", padding: 0, listStyle: "none" }}>
           {suggestions.map((city, i) => (
             <li
               key={i}

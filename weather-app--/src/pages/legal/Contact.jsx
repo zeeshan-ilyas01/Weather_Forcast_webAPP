@@ -6,14 +6,14 @@ export default function Contact() {
     <div style={{
       minHeight: "100vh",
       width: "100%",
-     background: `linear-gradient(180deg, ${colors.dawnStart}, ${colors.dawnEnd})`,
+      background: `linear-gradient(180deg, ${colors.dawnStart}, ${colors.dawnEnd})`,
     }}>
-      <div style={{maxWidth: layout.maxWidth, margin: "0 auto", padding: "40px 20px", color: colors.cream, fontFamily: fonts.display }}>
-        <Link to="/" style={{ color: "#FAF8F4", opacity: 0.85, fontSize: 14, textDecoration: "none" }}>
+      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "40px 20px", color: colors.cream, fontFamily: fonts.body }}>
+        <Link to="/" style={{ color: colors.cream, opacity: 0.85, fontSize: 14, textDecoration: "none" }}>
           ← Weather Hub
         </Link>
 
-        <h1 style={{ fontFamily: "'Fraunces', serif", marginTop: 20 }}>Contact</h1>
+        <h1 style={{ fontFamily: fonts.display, marginTop: 20 }}>Contact</h1>
         <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
           Questions, feedback, or issues with this site? Reach out at:
         </p>
