@@ -25,3 +25,7 @@ export const layout = {
   maxWidth: 640,
   narrowWidth: 400,
 };
+
+export const siteInfo = {
+  contactEmail: "hello@yourdomain.com",
+};

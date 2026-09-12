@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { colors, fonts, layout } from "../../utils/theme";
+import { colors, fonts, layout,siteInfo  } from "../../utils/theme";
 
 export default function Contact() {
   return (
@@ -17,8 +17,11 @@ export default function Contact() {
         <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
           Questions, feedback, or issues with this site? Reach out at:
         </p>
-        <p style={{ fontWeight: 600 }}>[add your real email address here]</p>
-      </div>
+
+   <p style={{ fontWeight: 600 }}>
+  <a href={`mailto:${siteInfo.contactEmail}`} style={{ color: "inherit" }}>{siteInfo.contactEmail}</a>
+</p> 
+    </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function Privacy() {
         </Link>
 
         <h1 style={{ fontFamily: fonts.display, marginTop: 20 }}>Privacy Policy</h1>
-        <p style={{ opacity: 0.8, fontStyle: "italic" }}>Last updated: [add today's date when you publish this]</p>
+    <p style={{ opacity: 0.8, fontStyle: "italic" }}>Last updated: September 12, 2026</p>
 
         <h2 style={{ fontFamily: fonts.display, fontSize: 20, marginTop: 32 }}>What data this site collects</h2>
         <p style={{ opacity: 0.9, lineHeight: 1.6 }}>

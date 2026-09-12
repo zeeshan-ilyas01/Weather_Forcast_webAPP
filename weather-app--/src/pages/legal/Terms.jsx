@@ -14,8 +14,7 @@ export default function Terms() {
         </Link>
 
         <h1 style={{ fontFamily: fonts.display, marginTop: 20 }}>Terms of Use</h1>
-        <p style={{ opacity: 0.8, fontStyle: "italic" }}>Last updated: [add today's date when you publish this]</p>
-
+<p style={{ opacity: 0.8, fontStyle: "italic" }}>Last updated: September 12, 2026</p>
         <h2 style={{ fontFamily: fonts.display, fontSize: 20, marginTop: 32 }}>Using this site</h2>
         <p style={{ opacity: 0.9, lineHeight: 1.6 }}>
           This site provides weather forecast information for general
