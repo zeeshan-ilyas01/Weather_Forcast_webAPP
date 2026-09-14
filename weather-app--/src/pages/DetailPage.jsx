@@ -11,6 +11,7 @@ import { getForecast } from "../utils/api";
 import { colors, fonts, layout } from "../utils/theme";
 import Loader from "../components/Loader";
 import { getWeatherCategory } from "../utils/weatherCodes";
+import { addSavedCity, removeSavedCity, isCitySaved } from "../utils/storage";
 
 function formatClock(isoLike) {
   if (!isoLike) return "--:--";
@@ -25,6 +26,11 @@ function formatClock(isoLike) {
 export default function DetailPage({ cityName = "Lahore", latitude = 31.55, longitude = 74.36 }) {
   const [weather, setWeather] = useState(null);
   const [unit, setUnit] = useState("C");
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setSaved(isCitySaved(cityName));
+  }, [cityName]);
 
   useEffect(() => {
     async function loadWeather() {
@@ -33,6 +39,16 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
     }
     loadWeather();
   }, [latitude, longitude]);
+
+  function handleToggleSave() {
+    if (saved) {
+      removeSavedCity(cityName);
+      setSaved(false);
+    } else {
+      addSavedCity({ name: cityName, latitude, longitude });
+      setSaved(true);
+    }
+  }
 
   function toDisplay(celsius) {
     if (unit === "C") return Math.round(celsius);
@@ -81,6 +97,23 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
         <p style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 18 }}>
           {cityName}
         </p>
+
+        <div style={{ textAlign: "center", marginBottom: 8 }}>
+          <button
+            onClick={handleToggleSave}
+            style={{
+              background: saved ? colors.cream : "transparent",
+              color: saved ? colors.ink : colors.cream,
+              border: `1px solid ${colors.cream}66`,
+              borderRadius: 999,
+              padding: "6px 14px",
+              fontSize: 13,
+              cursor: "pointer",
+            }}
+          >
+            {saved ? "✓ Saved" : "+ Save city"}
+          </button>
+        </div>
 
         <UnitToggle unit={unit} onUnitChange={setUnit} />
 
