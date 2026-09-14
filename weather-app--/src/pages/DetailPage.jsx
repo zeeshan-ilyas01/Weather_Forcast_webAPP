@@ -74,6 +74,12 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
   const category = getWeatherCategory(weather.current.weather_code);
   const palette = colors.sky[category]?.[isDay ? "day" : "night"] || colors.sky.clear.day;
 
+
+const currentHourIndex = weather.hourly.time.indexOf(weather.current.time);
+const uvIndex = currentHourIndex >= 0 ? Math.round(weather.hourly.uv_index[currentHourIndex]) : "--";
+const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[currentHourIndex]) : "--";
+
+
   const hours = weather.hourly.time.slice(0, 8).map((time, i) => ({
     time: time.split("T")[1],
     temperature: toDisplay(weather.hourly.temperature_2m[i]),
@@ -126,10 +132,12 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
         />
 
         <StatGrid
-          humidity={weather.current.relative_humidity_2m}
-          windSpeed={Math.round(weather.current.wind_speed_10m)}
-          sunrise={formatClock(weather.daily.sunrise?.[0])}
-          sunset={formatClock(weather.daily.sunset?.[0])}
+           humidity={weather.current.relative_humidity_2m}
+  windSpeed={Math.round(weather.current.wind_speed_10m)}
+  sunrise={formatClock(weather.daily.sunrise?.[0])}
+  sunset={formatClock(weather.daily.sunset?.[0])}
+  uvIndex={uvIndex}
+  dewPoint={dewPoint}
         />
 
         <HourlyForecast hours={hours} />

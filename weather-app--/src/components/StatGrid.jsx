@@ -1,9 +1,11 @@
 import { colors } from "../utils/theme";
 
-export default function StatGrid({ humidity, windSpeed, sunrise, sunset }) {
+export default function StatGrid({ humidity, windSpeed, sunrise, sunset, uvIndex, dewPoint }) {
   const stats = [
     { label: "Humidity", value: `${humidity}%` },
     { label: "Wind", value: `${windSpeed} km/h` },
+    { label: "UV Index", value: uvIndex },
+    { label: "Dew Point", value: `${dewPoint}°` },
     { label: "Sunrise", value: sunrise },
     { label: "Sunset", value: sunset },
   ];
@@ -12,7 +14,7 @@ export default function StatGrid({ humidity, windSpeed, sunrise, sunset }) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateColumns: "repeat(3, 1fr)",
         gap: 8,
         margin: "16px 0",
       }}
