@@ -12,7 +12,8 @@ import Loader from "../components/Loader";
 import { getWeatherCategory } from "../utils/weatherCodes";
 import { addSavedCity, removeSavedCity, isCitySaved } from "../utils/storage";
 import NavBar from "../components/NavBar";
-
+import PlanYourDay from "../components/PlanYourDay";
+import { getPlanTips } from "../utils/planYourDay";
 function formatClock(isoLike) {
   if (!isoLike) return "--:--";
   const timePart = isoLike.split("T")[1] || isoLike;
@@ -110,7 +111,7 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
     month: "long",
     day: "numeric",
   });
-
+const tips = getPlanTips(weather, toDisplay);
 const days = weather.daily.time.map((date, i) => ({
   date,
   label: i === 0
@@ -178,7 +179,15 @@ const days = weather.daily.time.map((date, i) => ({
 
         <AdSlot label="in-feed" />
 
-        <DailyForecast days={days} color={bottomText} />
+        <div style={{
+  display: "grid",
+  gridTemplateColumns: "1.6fr 1fr",
+  gap: 20,
+  marginTop: 20,
+}}>
+  <DailyForecast days={days} color={bottomText} />
+  <PlanYourDay tips={tips} color={bottomText} />
+</div>
 
         <Footer />
       </div>

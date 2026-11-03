@@ -5,7 +5,7 @@ import WeatherIcon from "./WeatherIcon";
 export default function DailyForecast({ days, color }) {
   return (
     <div style={{
-      marginTop: 20,
+      marginTop: 0,
       padding: "20px 24px",
       borderRadius: 24,
       background: `${colors.cream}34`,
