@@ -35,6 +35,18 @@ function Sun({ cx, cy, r }) {
   );
 }
 
+function Moon({ cx, cy, r }) {
+  return (
+    <g>
+      <mask id="moon-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+        <rect width="100" height="100" fill="white" />
+        <circle cx={cx + r * 0.5} cy={cy - r * 0.35} r={r * 0.85} fill="black" />
+      </mask>
+      <circle cx={cx} cy={cy} r={r} fill="#F4EBC8" mask="url(#moon-cut)" />
+    </g>
+  );
+}
+
 function Cloud({ fill = "#FFFFFF", dx = 0, dy = 0 }) {
   return (
     <g fill={fill} transform={`translate(${dx} ${dy})`}>
@@ -46,16 +58,18 @@ function Cloud({ fill = "#FFFFFF", dx = 0, dy = 0 }) {
   );
 }
 
-export default function WeatherIcon({ code, size = 48 }) {
+export default function WeatherIcon({ code, size = 48, isDay = true }) {
   const kind = getKind(code);
 
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={kind}>
-      {kind === "sun" && <Sun cx={50} cy={50} r={20} />}
+      {kind === "sun" && (
+        isDay ? <Sun cx={50} cy={50} r={20} /> : <Moon cx={50} cy={50} r={24} />
+      )}
 
       {kind === "partly" && (
         <>
-          <Sun cx={36} cy={38} r={14} />
+          {isDay ? <Sun cx={36} cy={38} r={14} /> : <Moon cx={36} cy={38} r={16} />}
           <Cloud dx={6} dy={8} />
         </>
       )}

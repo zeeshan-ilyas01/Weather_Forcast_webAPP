@@ -7,7 +7,7 @@ import UnitToggle from "../components/UnitToggle";
 import AdSlot from "../components/AdSlot";
 import Footer from "../components/Footer";
 import { getForecast } from "../utils/api";
-import { colors, fonts, layout } from "../utils/theme";
+import { colors, layout, readableText } from "../utils/theme";
 import Loader from "../components/Loader";
 import { getWeatherCategory } from "../utils/weatherCodes";
 import { addSavedCity, removeSavedCity, isCitySaved } from "../utils/storage";
@@ -21,6 +21,10 @@ function formatClock(isoLike) {
   const ampm = h >= 12 ? "PM" : "AM";
   h = h % 12 || 12;
   return `${h}:${mStr} ${ampm}`;
+}
+function formatHour(isoLike) {
+  const h = parseInt(isoLike.split("T")[1].split(":")[0], 10);
+  return `${h % 12 || 12} ${h >= 12 ? "PM" : "AM"}`;
 }
 
 export default function DetailPage({ cityName = "Lahore", latitude = 31.55, longitude = 74.36 }) {
@@ -72,7 +76,12 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
 
   const isDay = weather.current.is_day === 1;
   const category = getWeatherCategory(weather.current.weather_code);
-  const palette = colors.sky[category]?.[isDay ? "day" : "night"] || colors.sky.clear.day;
+  const weatherCode = weather.current.weather_code;
+  const skyKey = category === "clear-or-cloudy"
+    ? (weatherCode <= 2 ? "clear" : "cloudy")
+    : category;
+  const palette = colors.sky[skyKey][isDay ? "day" : "night"];
+  const bottomText = readableText(palette[1]);
 
 
 const currentHour = weather.current.time.slice(0, 13) + ":00";
@@ -83,11 +92,18 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
 
   const startHour = currentHourIndex >= 0 ? currentHourIndex : 0;
   const hours = weather.hourly.time
-    .slice(startHour, startHour + 8)
-    .map((time, i) => ({
-      time: time.split("T")[1],
+  .slice(startHour, startHour + 8)
+  .map((time, i) => {
+    const dayIdx = weather.daily.time.indexOf(time.slice(0, 10));
+    const hourIsDay =
+      time >= weather.daily.sunrise[dayIdx] && time < weather.daily.sunset[dayIdx];
+    return {
+      time: i === 0 ? "Now" : formatHour(time),
+      weatherCode: weather.hourly.weather_code[startHour + i],
       temperature: toDisplay(weather.hourly.temperature_2m[startHour + i]),
-    }));
+      isDay: hourIsDay,
+    };
+  });
 
   const dateLabel = new Date(weather.current.time).toLocaleDateString("en-US", {
     weekday: "long",
@@ -95,13 +111,16 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
     day: "numeric",
   });
 
-  const days = weather.daily.time.map((date, i) => ({
-    date,
-    weatherCode: weather.daily.weather_code[i],
-    max: toDisplay(weather.daily.temperature_2m_max[i]),
-    min: toDisplay(weather.daily.temperature_2m_min[i]),
-  }));
-
+const days = weather.daily.time.map((date, i) => ({
+  date,
+  label: i === 0
+    ? "Today"
+    : new Date(date + "T00:00").toLocaleDateString("en-US", { weekday: "short" }),
+  weatherCode: weather.daily.weather_code[i],
+  rain: weather.daily.precipitation_probability_max?.[i] ?? 0,
+  max: toDisplay(weather.daily.temperature_2m_max[i]),
+  min: toDisplay(weather.daily.temperature_2m_min[i]),
+}));
   return (
     <div style={{
       minHeight: "100vh",
@@ -142,6 +161,7 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
             high={toDisplay(weather.daily.temperature_2m_max[0])}
             low={toDisplay(weather.daily.temperature_2m_min[0])}
             weatherCode={weather.current.weather_code}
+            isDay={isDay}
           />
 
           <StatGrid
@@ -158,7 +178,7 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
 
         <AdSlot label="in-feed" />
 
-        <DailyForecast days={days} />
+        <DailyForecast days={days} color={bottomText} />
 
         <Footer />
       </div>

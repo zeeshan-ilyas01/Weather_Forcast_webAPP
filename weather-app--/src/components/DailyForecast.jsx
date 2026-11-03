@@ -1,25 +1,38 @@
+import { colors, fonts } from "../utils/theme";
 import { getWeatherLabel } from "../utils/weatherCodes";
-import { colors } from "../utils/theme";
+import WeatherIcon from "./WeatherIcon";
 
-export default function DailyForecast({ days }) {
+export default function DailyForecast({ days, color }) {
   return (
-    <div style={{ color: colors.cream }}>
-      <p style={{ fontSize: 12, opacity: 0.7, margin: "0 0 8px", fontWeight: 600 }}>
-        6-day forecast
+    <div style={{
+      marginTop: 20,
+      padding: "20px 24px",
+      borderRadius: 24,
+      background: `${colors.cream}34`,
+      border: `1px solid ${colors.cream}5F`,
+      fontFamily: fonts.body,
+      color,
+    }}>
+      <p style={{ margin: "0 0 8px", fontSize: 14, fontWeight: 600 }}>
+        {days.length}-day forecast
       </p>
+
       {days.map((day, i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            gap: 12,
-            padding: "8px 0",
-            borderBottom: i < days.length - 1 ? `0.5px solid ${colors.cream}26` : "none",
-          }}
-        >
-          <span style={{ flex: 1 }}>{day.date}</span>
-          <span style={{ flex: 1, opacity: 0.8 }}>{getWeatherLabel(day.weatherCode)}</span>
-          <span>{day.max}° / {day.min}°</span>
+        <div key={day.date} style={{
+          display: "grid",
+          gridTemplateColumns: "70px 48px 1fr 56px 110px",
+          alignItems: "center",
+          gap: 12,
+          padding: "8px 0",
+          borderTop: i === 0 ? "none" : `1px solid ${color}30`,
+        }}>
+          <span style={{ fontSize: 15, fontWeight: 700 }}>{day.label}</span>
+          <WeatherIcon code={day.weatherCode} size={32} />
+          <span style={{ fontSize: 14, opacity: 0.9 }}>{getWeatherLabel(day.weatherCode)}</span>
+          <span style={{ fontSize: 13, opacity: 0.85 }}>💧 {day.rain}%</span>
+          <span style={{ fontSize: 15, fontWeight: 700, textAlign: "right" }}>
+            {day.max}° / {day.min}°
+          </span>
         </div>
       ))}
     </div>

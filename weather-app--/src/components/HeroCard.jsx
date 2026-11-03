@@ -1,7 +1,4 @@
 import { colors, fonts } from "../utils/theme";
-//import { getWeatherLabel, getWeatherIcon } from "../utils/weatherCodes";
-//import { getWeatherLabel, getWeatherEmoji } from "../utils/weatherCodes";
-
 import { getWeatherLabel } from "../utils/weatherCodes";
 import WeatherIcon from "./WeatherIcon";
 
@@ -13,6 +10,7 @@ export default function HeroCard({
   high,
   low,
   weatherCode,
+  isDay,
 }) {
   return (
     <div style={{
@@ -46,7 +44,7 @@ export default function HeroCard({
         </p>
       </div>
 
-     <WeatherIcon code={weatherCode} size={180} />
+      <WeatherIcon code={weatherCode} size={180} isDay={isDay} />
     </div>
   );
 }
