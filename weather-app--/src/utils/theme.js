@@ -1,7 +1,7 @@
 export const colors = {
   cream: "#FAF8F4",
   ink: "#12181F",
-
+accent: "#F2A65A",
   dawnStart: "#E8A66E",
   dawnEnd: "#F6D9B8",
 
@@ -24,8 +24,10 @@ export const fonts = {
 export const layout = {
   maxWidth: 640,
   narrowWidth: 400,
+   pageWidth: 1200 
 };
 
 export const siteInfo = {
   contactEmail: "hello@yourdomain.com",
 };
+

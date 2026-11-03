@@ -1,4 +1,4 @@
-import { colors } from "../utils/theme";
+import { colors, fonts } from "../utils/theme";
 
 export default function StatGrid({ humidity, windSpeed, sunrise, sunset, uvIndex, dewPoint }) {
   const stats = [
@@ -11,29 +11,47 @@ export default function StatGrid({ humidity, windSpeed, sunrise, sunset, uvIndex
   ];
 
   return (
-    <div
-      style={{
+    <div style={{
+      padding: 20,
+      borderRadius: 24,
+      background: `${colors.cream}34`,
+      border: `1px solid ${colors.cream}5F`,
+      display: "flex",
+      flexDirection: "column",
+      gap: 12,
+    }}>
+      <p style={{ margin: 0, fontFamily: fonts.body, fontSize: 14, fontWeight: 600 }}>
+        Right now
+      </p>
+
+      <div style={{
+        flex: 1,
         display: "grid",
         gridTemplateColumns: "repeat(3, 1fr)",
-        gap: 8,
-        margin: "16px 0",
-      }}
-    >
-      {stats.map((stat, i) => (
-        <div
-          key={i}
-          style={{
-            background: `${colors.cream}1A`,
-            borderRadius: 10,
-            padding: 8,
+        gap: 10,
+      }}>
+        {stats.map((stat) => (
+          <div key={stat.label} style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 4,
+            padding: "8px 4px",
+            borderRadius: 16,
+            background: `${colors.cream}28`,
+            border: `1px solid ${colors.cream}46`,
             textAlign: "center",
-            color: colors.cream,
-          }}
-        >
-          <p style={{ fontSize: 13, fontWeight: 600, margin: 0 }}>{stat.value}</p>
-          <p style={{ fontSize: 10, opacity: 0.7, margin: "2px 0 0" }}>{stat.label}</p>
-        </div>
-      ))}
+          }}>
+            <span style={{ fontFamily: fonts.body, fontSize: 16, fontWeight: 700 }}>
+              {stat.value}
+            </span>
+            <span style={{ fontFamily: fonts.body, fontSize: 12, opacity: 0.85 }}>
+              {stat.label}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

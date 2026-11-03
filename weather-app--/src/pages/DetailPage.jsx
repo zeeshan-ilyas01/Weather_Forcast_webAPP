@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import SkyBackground from "../components/SkyBackground";
-import CurrentConditions from "../components/CurrentConditions";
+import HeroCard from "../components/HeroCard";
 import StatGrid from "../components/StatGrid";
 import HourlyForecast from "../components/HourlyForecast";
 import DailyForecast from "../components/DailyForecast";
@@ -12,6 +11,7 @@ import { colors, fonts, layout } from "../utils/theme";
 import Loader from "../components/Loader";
 import { getWeatherCategory } from "../utils/weatherCodes";
 import { addSavedCity, removeSavedCity, isCitySaved } from "../utils/storage";
+import NavBar from "../components/NavBar";
 
 function formatClock(isoLike) {
   if (!isoLike) return "--:--";
@@ -75,15 +75,25 @@ export default function DetailPage({ cityName = "Lahore", latitude = 31.55, long
   const palette = colors.sky[category]?.[isDay ? "day" : "night"] || colors.sky.clear.day;
 
 
-const currentHourIndex = weather.hourly.time.indexOf(weather.current.time);
+const currentHour = weather.current.time.slice(0, 13) + ":00";
+const currentHourIndex = weather.hourly.time.indexOf(currentHour);
 const uvIndex = currentHourIndex >= 0 ? Math.round(weather.hourly.uv_index[currentHourIndex]) : "--";
 const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[currentHourIndex]) : "--";
 
 
-  const hours = weather.hourly.time.slice(0, 8).map((time, i) => ({
-    time: time.split("T")[1],
-    temperature: toDisplay(weather.hourly.temperature_2m[i]),
-  }));
+  const startHour = currentHourIndex >= 0 ? currentHourIndex : 0;
+  const hours = weather.hourly.time
+    .slice(startHour, startHour + 8)
+    .map((time, i) => ({
+      time: time.split("T")[1],
+      temperature: toDisplay(weather.hourly.temperature_2m[startHour + i]),
+    }));
+
+  const dateLabel = new Date(weather.current.time).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 
   const days = weather.daily.time.map((date, i) => ({
     date,
@@ -99,12 +109,9 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
       background: `linear-gradient(180deg, ${palette[0]}, ${palette[1]})`,
       color: colors.cream,
     }}>
-      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px" }}>
-        <p style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 18 }}>
-          {cityName}
-        </p>
-
-        <div style={{ textAlign: "center", marginBottom: 8 }}>
+      <div style={{ maxWidth: layout.pageWidth, margin: "0 auto", padding: "24px 16px" }}>
+        <NavBar>
+          <UnitToggle unit={unit} onUnitChange={setUnit} />
           <button
             onClick={handleToggleSave}
             style={{
@@ -119,26 +126,33 @@ const dewPoint = currentHourIndex >= 0 ? toDisplay(weather.hourly.dew_point_2m[c
           >
             {saved ? "✓ Saved" : "+ Save city"}
           </button>
+        </NavBar>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1.9fr 1fr",
+          gap: 20,
+          marginTop: 20,
+        }}>
+          <HeroCard
+            cityName={cityName}
+            dateLabel={dateLabel}
+            temperature={toDisplay(weather.current.temperature_2m)}
+            apparentTemperature={toDisplay(weather.current.apparent_temperature)}
+            high={toDisplay(weather.daily.temperature_2m_max[0])}
+            low={toDisplay(weather.daily.temperature_2m_min[0])}
+            weatherCode={weather.current.weather_code}
+          />
+
+          <StatGrid
+            humidity={weather.current.relative_humidity_2m}
+            windSpeed={Math.round(weather.current.wind_speed_10m)}
+            sunrise={formatClock(weather.daily.sunrise?.[0])}
+            sunset={formatClock(weather.daily.sunset?.[0])}
+            uvIndex={uvIndex}
+            dewPoint={dewPoint}
+          />
         </div>
-
-        <UnitToggle unit={unit} onUnitChange={setUnit} />
-
-        <SkyBackground isDay={isDay} weatherCode={weather.current.weather_code} />
-
-        <CurrentConditions
-          temperature={toDisplay(weather.current.temperature_2m)}
-          apparentTemperature={toDisplay(weather.current.apparent_temperature)}
-          weatherCode={weather.current.weather_code}
-        />
-
-        <StatGrid
-           humidity={weather.current.relative_humidity_2m}
-  windSpeed={Math.round(weather.current.wind_speed_10m)}
-  sunrise={formatClock(weather.daily.sunrise?.[0])}
-  sunset={formatClock(weather.daily.sunset?.[0])}
-  uvIndex={uvIndex}
-  dewPoint={dewPoint}
-        />
 
         <HourlyForecast hours={hours} />
 
