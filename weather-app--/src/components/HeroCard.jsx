@@ -1,6 +1,7 @@
 import { colors, fonts } from "../utils/theme";
 import { getWeatherLabel } from "../utils/weatherCodes";
 import WeatherIcon from "./WeatherIcon";
+import useIsMobile from "../utils/useIsMobile";
 
 export default function HeroCard({
   cityName,
@@ -12,9 +13,11 @@ export default function HeroCard({
   weatherCode,
   isDay,
 }) {
+  const isMobile = useIsMobile();
+
   return (
     <div style={{
-      padding: "28px 32px",
+      padding: isMobile ? "20px" : "28px 32px",
       borderRadius: 24,
       background: `${colors.cream}34`,
       border: `1px solid ${colors.cream}5F`,
@@ -22,17 +25,17 @@ export default function HeroCard({
       alignItems: "center",
       justifyContent: "space-between",
       gap: 16,
-      minHeight: 260,
+      minHeight: isMobile ? 200 : 260,
     }}>
       <div>
-        <h1 style={{ margin: 0, fontFamily: fonts.display, fontSize: 36 }}>
+        <h1 style={{ margin: 0, fontFamily: fonts.display, fontSize: isMobile ? 28 : 36 }}>
           {cityName}
         </h1>
         <p style={{ margin: "4px 0 0", fontFamily: fonts.body, fontSize: 15, opacity: 0.85 }}>
           {dateLabel}
         </p>
 
-        <div style={{ fontFamily: fonts.display, fontSize: 96, fontWeight: 700, lineHeight: 1.1 }}>
+        <div style={{ fontFamily: fonts.display, fontSize: isMobile ? 72 : 96, fontWeight: 700, lineHeight: 1.1 }}>
           {temperature}°
         </div>
 
@@ -44,7 +47,7 @@ export default function HeroCard({
         </p>
       </div>
 
-      <WeatherIcon code={weatherCode} size={180} isDay={isDay} />
+      <WeatherIcon code={weatherCode} size={isMobile ? 100 : 180} isDay={isDay} />
     </div>
   );
 }

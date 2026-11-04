@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { colors, fonts } from "../utils/theme";
+import useIsMobile from "../utils/useIsMobile";
 
 const tabs = [
   { label: "Today", to: "/" },
@@ -8,12 +9,14 @@ const tabs = [
 
 export default function NavBar({ children }) {
   const { pathname } = useLocation();
+  const isMobile = useIsMobile();
 
   return (
     <nav style={{
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
+      flexWrap: "wrap",
       gap: 16,
       padding: "10px 20px",
       borderRadius: 30,
@@ -31,25 +34,27 @@ export default function NavBar({ children }) {
         Weather Hub
       </Link>
 
-      <div style={{ display: "flex", gap: 8 }}>
-        {tabs.map((tab) => {
-          const active = pathname === tab.to;
-          return (
-            <Link key={tab.to} to={tab.to} style={{
-              padding: "8px 18px",
-              borderRadius: 18,
-              fontFamily: fonts.body,
-              fontSize: 14,
-              fontWeight: active ? 600 : 400,
-              textDecoration: "none",
-              color: active ? colors.ink : colors.cream,
-              background: active ? colors.accent : "transparent",
-            }}>
-              {tab.label}
-            </Link>
-          );
-        })}
-      </div>
+      {!isMobile && (
+        <div style={{ display: "flex", gap: 8 }}>
+          {tabs.map((tab) => {
+            const active = pathname === tab.to;
+            return (
+              <Link key={tab.to} to={tab.to} style={{
+                padding: "8px 18px",
+                borderRadius: 18,
+                fontFamily: fonts.body,
+                fontSize: 14,
+                fontWeight: active ? 600 : 400,
+                textDecoration: "none",
+                color: active ? colors.ink : colors.cream,
+                background: active ? colors.accent : "transparent",
+              }}>
+                {tab.label}
+              </Link>
+            );
+          })}
+        </div>
+      )}
 
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         {children}
