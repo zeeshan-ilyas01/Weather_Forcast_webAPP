@@ -1,8 +1,8 @@
 import { colors } from "../utils/theme";
 
 function getKind(code) {
-  if (code === 0) return "sun";
-  if (code === 1 || code === 2) return "partly";
+    if (code === 0 || code === 1) return "sun";
+  if (code === 2) return "partly";
   if (code === 3) return "cloud";
   if (code === 45 || code === 48) return "fog";
   if (code >= 51 && code <= 67) return "rain";
