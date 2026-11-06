@@ -21,7 +21,7 @@ const CLOUD_FILL = {
   snow: ["#FAFCFF", "#C9D6E3", 1, 1],
   rain: ["#97A4B5", "#5D6879", 1, 1],
   storm: ["#505A70", "#1C222E", 1, 1],
-  night: ["#8FA0C8", "#5B6A92", 0.42, 0.28],
+  night: ["#44558A", "#2F3C66", 1, 1],
 };
 const GLOW = {
   day: { size: 280, right: "7%", top: "3%", dur: 6, bg: "radial-gradient(circle,rgba(255,226,170,.95),rgba(255,226,170,0) 68%)" },
@@ -176,7 +176,7 @@ export default function SkyScene({ scene = "day" }) {
 
       {clouds.map((c, i) => (
         <svg key={i} className="hs-c" viewBox="0 0 300 120" width={c.w}
-          style={{ top: `${c.top}%`, opacity: c.op, animationDuration: `${c.dur}s`, animationDelay: `${c.delay}s` }}>
+          style={{ top: `${c.top}%`, opacity: scene === "night" ? c.op * 0.55 : c.op , animationDuration: `${c.dur}s`, animationDelay: `${c.delay}s` }}>
           <g fill={`url(#hs-cg-${scene})`} filter="url(#hs-soft)">
             {c.puffs.map((pf, j) => <circle key={j} cx={pf.cx} cy={pf.cy} r={pf.r} />)}
             <rect x="22" y="68" width="256" height="34" rx="17" />

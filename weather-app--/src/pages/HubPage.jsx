@@ -11,6 +11,8 @@ import { useHubWeather } from "../utils/useHubWeather";
 import { colors, fonts, layout } from "../utils/theme";
 import { SCENES, getSceneKey } from "../utils/scenes";
    import SkyScene from "../components/SkyScene";
+import AirPanel from "../components/AirPanel";
+import PrayerCard from "../components/PrayerCard";
 
 export default function HubPage() {
   const [query, setQuery] = useState("");
@@ -97,7 +99,7 @@ export default function HubPage() {
     }}>
       <SkyScene scene={sceneKey} />
 
-      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: layout.pageWidth, margin: "0 auto", padding: "24px 16px", position: "relative", zIndex: 1 }}>
         <h1 style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 22, color: scene.text }}>
           Weather Hub
         </h1>
@@ -123,7 +125,12 @@ export default function HubPage() {
         />
 
 
-
+    {weather && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))", gap: 16, margin: "16px 0" }}>
+            <AirPanel air={air} text={scene.text} />
+            <PrayerCard place={place} weather={weather} text={scene.text} />
+          </div>
+        )}
 
 
 
