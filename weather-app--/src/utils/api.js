@@ -18,3 +18,15 @@ export async function getForecast(latitude, longitude) {
   const data = await res.json();
   return data;
 }
+export async function getAirQuality(latitude, longitude) {
+  const url =
+    `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}` +
+    `&current=us_aqi,pm2_5,pm10,dust` +
+    `&hourly=us_aqi,pm2_5,pm10,dust` +
+    `&timezone=auto&forecast_days=2`;
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Air quality request failed");
+  const data = await res.json();
+  return data;
+}
