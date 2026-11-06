@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import SavedCityCard from "../components/SavedCityCard";
+import HubHero from "../components/HubHero";
 import AdSlot from "../components/AdSlot";
 import Footer from "../components/Footer";
 import { searchCities, getForecast } from "../utils/api";
 import { getSavedCities, removeSavedCity } from "../utils/storage";
+import { useHubWeather } from "../utils/useHubWeather";
 import { colors, fonts, layout } from "../utils/theme";
 
 export default function HubPage() {
@@ -14,7 +16,10 @@ export default function HubPage() {
   const [savedCities, setSavedCities] = useState([]);
   const [loadingSaved, setLoadingSaved] = useState(true);
   const debounceTimer = useRef(null);
+  const searchRef = useRef(null);
   const navigate = useNavigate();
+
+  const { place, weather, air, loading, locationError, requestPreciseLocation } = useHubWeather();
 
   useEffect(() => {
     async function loadSavedCitiesWithWeather() {
@@ -69,6 +74,14 @@ export default function HubPage() {
     setSavedCities(updated);
   }
 
+  // "Not your city?" scrolls to the search box and focuses it
+  function focusSearch() {
+    const input = searchRef.current?.querySelector("input");
+    if (!input) return;
+    input.scrollIntoView({ behavior: "smooth", block: "center" });
+    input.focus();
+  }
+
   return (
     <div style={{
       minHeight: "100vh",
@@ -81,11 +94,23 @@ export default function HubPage() {
           Weather Hub
         </h1>
 
-        <SearchBar
-          query={query}
-          suggestions={suggestions}
-          onQueryChange={handleQueryChange}
-          onSelectCity={handleSelectCity}
+        <div ref={searchRef}>
+          <SearchBar
+            query={query}
+            suggestions={suggestions}
+            onQueryChange={handleQueryChange}
+            onSelectCity={handleSelectCity}
+          />
+        </div>
+
+        <HubHero
+          place={place}
+          weather={weather}
+          air={air}
+          loading={loading}
+          locationError={locationError}
+          onWrongCity={focusSearch}
+          onPrecise={requestPreciseLocation}
         />
 
         <p style={{ fontSize: 13, fontWeight: 600, margin: "16px 0 8px", color: colors.cream }}>

@@ -30,3 +30,20 @@ export async function getAirQuality(latitude, longitude) {
   const data = await res.json();
   return data;
 }
+
+// Approximate location from the visitor's IP (works on Vercel only).
+// Returns null if unavailable, so the page can fall back to a default city.
+export async function getApproxLocation() {
+  try {
+    const res = await fetch("/api/location");
+    if (!res.ok) return null;
+    const loc = await res.json();
+    if (loc.latitude == null || loc.longitude == null) return null;
+    const countryName = loc.country
+      ? new Intl.DisplayNames(["en"], { type: "region" }).of(loc.country)
+      : null;
+    return { ...loc, countryName };
+  } catch {
+    return null;
+  }
+}
