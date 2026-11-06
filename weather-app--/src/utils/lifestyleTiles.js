@@ -66,7 +66,9 @@ export function getLifestyleTiles(weather, air, toDisplay = (c) => c) {
     tiles.push({ id: "laundry", title: "Laundry", value: "Poor", color: POOR, text: "Dust and haze will settle on it" });
   } else if (rain >= 30 || humidity >= 80 || (aqi ?? 0) > 100) {
     tiles.push({ id: "laundry", title: "Laundry", value: "Fair", color: FAIR, text: "Slow drying. Watch the sky" });
-  } else {
+  }
+ 
+  else {
     tiles.push({ id: "laundry", title: "Laundry", value: "Good", color: GOOD, text: "Dry air, clothes dry quickly" });
   }
 
