@@ -14,6 +14,9 @@ import { SCENES, getSceneKey } from "../utils/scenes";
 import AirPanel from "../components/AirPanel";
 import PrayerCard from "../components/PrayerCard";
 
+import TodayForYou from "../components/TodayForYou";
+import PopularCities from "../components/PopularCities";
+
 export default function HubPage() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -125,6 +128,13 @@ export default function HubPage() {
         />
 
 
+{weather && (
+          <TodayForYou weather={weather} air={air} placeName={place?.name} text={scene.text} />
+        )}
+
+
+
+
     {weather && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))", gap: 16, margin: "16px 0" }}>
             <AirPanel air={air} text={scene.text} />
@@ -165,6 +175,7 @@ export default function HubPage() {
         )}
 
         <AdSlot label="320x100" />
+                <PopularCities text={scene.text} />
 
         <Footer />
       </div>
