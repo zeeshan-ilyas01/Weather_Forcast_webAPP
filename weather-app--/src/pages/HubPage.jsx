@@ -10,6 +10,7 @@ import { getSavedCities, removeSavedCity } from "../utils/storage";
 import { useHubWeather } from "../utils/useHubWeather";
 import { colors, fonts, layout } from "../utils/theme";
 import { SCENES, getSceneKey } from "../utils/scenes";
+   import SkyScene from "../components/SkyScene";
 
 export default function HubPage() {
   const [query, setQuery] = useState("");
@@ -86,17 +87,20 @@ export default function HubPage() {
     input.focus();
   }
 
-  return (
+    return (
     <div style={{
       minHeight: "100vh",
       width: "100%",
-      background: `linear-gradient(180deg, ${scene.top}, ${scene.bottom})`,
-   color: scene.text,
+      position: "relative",
+      background: scene.bg,
+      color: scene.text,
     }}>
-      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px" }}>
-  <h1 style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 22, color: scene.text }}>
-    Weather Hub
-  </h1>
+      <SkyScene scene={sceneKey} />
+
+      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "24px 16px", position: "relative", zIndex: 1 }}>
+        <h1 style={{ textAlign: "center", fontFamily: fonts.display, fontSize: 22, color: scene.text }}>
+          Weather Hub
+        </h1>
 
         <div ref={searchRef}>
           <SearchBar
@@ -115,7 +119,17 @@ export default function HubPage() {
           locationError={locationError}
           onWrongCity={focusSearch}
           onPrecise={requestPreciseLocation}
+          text={scene.text}
         />
+
+
+
+
+
+
+
+
+
 
       <p style={{ fontSize: 13, fontWeight: 600, margin: "16px 0 8px", color: scene.text }}>
   Saved locations

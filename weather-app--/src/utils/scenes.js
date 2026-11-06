@@ -2,13 +2,13 @@ import { colors } from "./theme";
 
 // Page background (top to bottom) and text colour for each scene
 export const SCENES = {
-  day:    { top: "#4FA8DB", bottom: "#CDE8EE", text: colors.ink },
-  hot:    { top: "#F28C38", bottom: "#F8D9A0", text: colors.ink },
-  spring: { top: "#7CC4E8", bottom: "#F6D7E0", text: colors.ink },
-  snow:   { top: "#9DB4C8", bottom: "#E6EEF4", text: colors.ink },
-  rain:   { top: "#41596B", bottom: "#7088A0", text: colors.cream },
-  storm:  { top: "#232B3D", bottom: "#566175", text: colors.cream },
-  night:  { top: "#0E1A3A", bottom: "#2C3E6B", text: colors.cream },
+  day:    { bg: "linear-gradient(180deg,#4FA8D8,#DCF3EE)", text: colors.ink },
+  hot:    { bg: "linear-gradient(180deg,#2B8CD0 0%,#8CCBEA 45%,#FFE3B5 100%)", text: colors.ink },
+  spring: { bg: "linear-gradient(180deg,#78C6EE,#E6F5D6)", text: colors.ink },
+  snow:   { bg: "linear-gradient(180deg,#9FB2C6,#EFF5F9)", text: colors.ink },
+  rain:   { bg: "linear-gradient(180deg,#48576A,#84939F)", text: colors.cream },
+  storm:  { bg: "linear-gradient(180deg,#171B24,#4A5570)", text: colors.cream },
+  night:  { bg: "linear-gradient(180deg,#0D1B2A,#243352)", text: colors.cream },
 };
 
 export function getSceneKey(weather, latitude = 0) {
