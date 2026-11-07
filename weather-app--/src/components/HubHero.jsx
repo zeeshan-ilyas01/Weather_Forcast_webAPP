@@ -10,13 +10,12 @@ const glass = {
   borderRadius: 24,
   padding: "24px 22px",
   margin: "16px 0",
-  color: colors.cream,
 };
 
-export default function HubHero({ place, weather, air, loading, locationError, onWrongCity, onPrecise }) {
+export default function HubHero({ place, weather, air, loading, locationError, onWrongCity, onPrecise, text = colors.cream }) {
   if (loading || !weather) {
     return (
-      <div style={glass}>
+      <div style={{ ...glass, color: text }}>
         <p style={{ margin: 0, opacity: 0.8 }}>Finding the weather near you…</p>
       </div>
     );
@@ -32,16 +31,16 @@ export default function HubHero({ place, weather, air, loading, locationError, o
   ];
 
   const linkButton = {
-    background: "none", border: "none", padding: 0, color: colors.cream,
+    background: "none", border: "none", padding: 0, color: text,
     textDecoration: "underline", fontSize: 13, cursor: "pointer",
   };
   const pillButton = {
-    background: `${colors.cream}33`, border: "none", color: colors.cream,
+    background: `${colors.cream}33`, border: "none", color: text,
     borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 600, cursor: "pointer",
   };
 
   return (
-    <div style={glass}>
+    <div style={{ ...glass, color: text }}>
       {/* location line */}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
         <span style={{ fontWeight: 700, fontSize: 15 }}>
