@@ -1,6 +1,7 @@
 import { getWeatherLabel } from "../utils/weatherCodes";
 import { getVerdict } from "../utils/verdict";
 import { colors, fonts } from "../utils/theme";
+import HeroIcon from "./HeroIcon";
 
 const glass = {
   background: `${colors.cream}34`,
@@ -12,7 +13,7 @@ const glass = {
   margin: "16px 0",
 };
 
-export default function HubHero({ place, weather, air, loading, locationError, onWrongCity, onPrecise, text = colors.cream }) {
+export default function HubHero({ place, weather, air, loading, locationError, onWrongCity, onPrecise, text = colors.cream, scene = "day" }) {
   if (loading || !weather) {
     return (
       <div style={{ ...glass, color: text }}>
@@ -57,11 +58,16 @@ export default function HubHero({ place, weather, air, loading, locationError, o
         </p>
       )}
 
-      {/* temperature and condition */}
-      <div style={{ margin: "18px 0 6px", fontFamily: fonts.display, fontSize: "clamp(72px, 18vw, 120px)", lineHeight: 1 }}>
-        {Math.round(c.temperature_2m)}°
+      {/* temperature, condition and animated icon */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, margin: "18px 0 6px" }}>
+        <div>
+          <div style={{ fontFamily: fonts.display, fontSize: "clamp(72px, 18vw, 120px)", lineHeight: 1 }}>
+            {Math.round(c.temperature_2m)}°
+          </div>
+          <div style={{ fontSize: 20, fontWeight: 600, marginTop: 6 }}>{getWeatherLabel(c.weather_code)}</div>
+        </div>
+        <HeroIcon scene={scene} />
       </div>
-      <div style={{ fontSize: 20, fontWeight: 600 }}>{getWeatherLabel(c.weather_code)}</div>
 
       {/* verdict */}
       <p style={{ fontFamily: fonts.display, fontSize: 22, lineHeight: 1.3, margin: "18px 0", maxWidth: 520 }}>

@@ -2,7 +2,10 @@ import { getLifestyleTiles } from "../utils/lifestyleTiles";
 import { glass } from "../utils/glass";
 import { colors, fonts } from "../utils/theme";
 
+
 const CSS = `
+.hub-tiles{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:760px){.hub-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @keyframes hub-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.hub-tile{animation:none!important;opacity:1!important}}
 `;
@@ -18,7 +21,7 @@ export default function TodayForYou({ weather, air, placeName, text = colors.cre
         Simple guidance for {placeName || "your area"}, based on today's weather and air.
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 12 }}>
+            <div className="hub-tiles">
         {tiles.map((t, i) => (
           <div
             key={t.id}
