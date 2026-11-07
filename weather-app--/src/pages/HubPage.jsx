@@ -113,6 +113,7 @@ export default function HubPage() {
             suggestions={suggestions}
             onQueryChange={handleQueryChange}
             onSelectCity={handleSelectCity}
+            text={scene.text}
           />
         </div>
 
@@ -174,10 +175,10 @@ export default function HubPage() {
           </div>
         )}
 
-        <AdSlot label="320x100" />
+<AdSlot label="320x100" text={scene.text} />
                 <PopularCities text={scene.text} />
 
-        <Footer />
+       <Footer text={scene.text} />
       </div>
     </div>
   );
