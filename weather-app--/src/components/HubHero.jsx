@@ -66,7 +66,7 @@ export default function HubHero({ place, weather, air, loading, locationError, o
           </div>
           <div style={{ fontSize: 20, fontWeight: 600, marginTop: 6 }}>{getWeatherLabel(c.weather_code)}</div>
         </div>
-        <HeroIcon scene={scene} />
+        <HeroIcon scene={scene === "day" && c.weather_code <= 1 ? "hot" : scene} />
       </div>
 
       {/* verdict */}
